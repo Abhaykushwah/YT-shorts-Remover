@@ -1,0 +1,15 @@
+{
+    "name": "YT shorts Remover",
+    "version": "0.0.1",
+    "description": "It will remove shorts from YouTube",
+    "manifest_version": 3,
+    "action": {
+        "default_title": "YT shorts Remover",
+        "default_popup": "popup.html",
+        "defualt_icon": "logo.png"
+    },
+    "icons": {
+        "130": "logo.png"
+    },
+    "permissions": ["activeTab"]
+}

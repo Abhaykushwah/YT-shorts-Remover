@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>YT shorts Remover</title>
+  </head>
+  <body>
+    <center><h3>YT shorts Remover</h3></center>
+    <b>Remover Shorts from your YouTube</b>
+    <br />
+    <hr />
+
+    <button onclick="Enable()">Enable</button>
+    <button onclick="disable()">Disable</button>
+    
+    <script>
+      function Enable() {
+        const requests = performance.getEntriesByType("resource");
+
+        for (let i = 0; i < requests.length; i++) {
+          const request = requests[i];
+
+          // Check if the request URL contains the keyword "short"
+          if (request.name.includes("short")) {
+            fetch(request.name, { method: "HEAD" });
+          }
+        }
+
+        // Log all the href attribute values of the a elements on the page
+        const urls = document.getElementsByTagName("a");
+        for (let i = 0; i < urls.length; i++) {
+          console.log(urls[i].href);
+        }
+        location.reload();
+      }
+
+      function disable() {
+        const droppedRequests = [];
+
+        const requests = performance.getEntriesByType("resource");
+
+        for (let i = 0; i < requests.length; i++) {
+          const request = requests[i];
+
+          if (request.name.includes("short")) {
+            // Drop the request by storing its URL in the droppedRequests array
+            droppedRequests.push(request.name);
+            fetch(request.name, { method: "HEAD" });
+          }
+        }
+
+        // Restore the dropped requests
+        for (let i = 0; i < droppedRequests.length; i++) {
+          const url = droppedRequests[i];
+          fetch(url, { method: "GET" });
+        }
+        location.reload();
+      }
+    </script>
+  </body>
+</html>
